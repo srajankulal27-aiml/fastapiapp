@@ -1,5 +1,6 @@
-from sqlalchemy import Column,Integer,String,enum,relationship
+from sqlalchemy import Column,Integer,String,Enum,ForeignKey
 from database import engine,Base,SessionLocal
+from sqlalchemy.orm import relationship
 
 class Company(Base):
     __tablename__="companies"
@@ -7,5 +8,4 @@ class Company(Base):
     name=Column(String,nullable=False,index=True)
     email=Column(String,unique=True)
     phone=Column(String,unique=True)
-    jobs=relationship("job",back_populates="Company")
-    
+    jobs=relationship("Job",back_populates="company")

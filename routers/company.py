@@ -43,8 +43,6 @@ def delete_company(company_id: int,db:Session=Depends(get_db)):
     db_company = db.query(Company).filter(Company.id == company_id).first()
     if not db_company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Company Not Found")
-    for key,value in company.dict().items():
-        setattr(db_company,key,value)
     db.commit
     db.delete(db_company)
     return {"detail":"Company deleted succesfully."}

@@ -12,8 +12,15 @@ class UserCreate(UserBase):
     pass
 
 
-class UserResponse(UserBase):
+class UserResponse(BaseModel):
     id: int
+    name: str
+    email: str
+    role: str
 
     class Config:
         from_attributes = True
+
+class Login_User(BaseModel):
+    email: str
+    password: str

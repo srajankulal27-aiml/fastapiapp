@@ -1,8 +1,9 @@
 interface Job{
+    id: number;
     title: string;
+    description: string;
     salary: number;
-    description:string
-    company_id:number
-
+    company_id: number;
 }
-export type{Job}
+
+export type {Job};

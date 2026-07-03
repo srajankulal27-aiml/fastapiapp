@@ -27,3 +27,4 @@ export async function deleteJob(id: number): Promise<void> {
     const response = await axios.delete(`${API_BASE_URL}/job/${id}`);
     return response.data
 }
+

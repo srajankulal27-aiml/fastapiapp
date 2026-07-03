@@ -1,18 +1,18 @@
-from fastapi import HTTPException, Depends
+
 from jose import jwt
 from datetime import datetime, timedelta
-from sqlalchemy.orm import Session
-from backend.database import get_db
-from schemas.token import Token
-import os
-from models import users
+from database import get_db
 from dotenv import load_dotenv
+import os
+from fastapi import Depends, HTTPException
+from sqlalchemy.orm import Session
+from models.users import User
+
 load_dotenv()
-
 SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
+ALGORITHM = "HS256"
 
-def create_access_token(data: dict, expires_delta: timedelta = timedelta(hours=2)):
+def create_access_token(data: dict, expires_delta: timedelta =timedelta(hours=2)):
     to_encode = data.copy()
     expire = datetime.now() + expires_delta
     to_encode.update({"exp": expire})
@@ -20,7 +20,30 @@ def create_access_token(data: dict, expires_delta: timedelta = timedelta(hours=2
     return encoded_jwt
 
 def verify_access_token(token: str, db: Session = Depends(get_db)):
-    current_user = verify_token(token)
+    to_decode = jwt.decode(token, key=SECRET_KEY, algorithms=[ALGORITHM])
+
+    user_id = None
+    if isinstance(to_decode, dict):
+        user_id = to_decode.get("user_id") or to_decode.get("sub")
+
+    if not user_id:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid authentication credentials"
+        )
+
+    try:
+        user_id = int(user_id)
+    except (TypeError, ValueError):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid authentication credentials"
+        )
+
+    current_user = db.query(User).filter(User.id == user_id).first()
     if current_user is None:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid authentication credentials"
+        )
     return current_user

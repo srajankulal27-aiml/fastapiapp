@@ -1,8 +1,11 @@
-function Footer(){
-    return(
+function Footer() {
+    return (
         <footer>
-            <p>All rights reserved by Talentspark</p>
+            <br />
+            <hr />
+            <p> All rights reserved by TalentSpark </p>
         </footer>
     )
 }
+
 export default Footer

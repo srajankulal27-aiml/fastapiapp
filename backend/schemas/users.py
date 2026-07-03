@@ -1,16 +1,13 @@
 from pydantic import BaseModel
 
-
 class UserBase(BaseModel):
-    name: str
-    email: str
-    password: str
-    role: str
-
+    name:str
+    email:str
+    password:str
+    role:str
 
 class UserCreate(UserBase):
     pass
-
 
 class UserResponse(BaseModel):
     id: int
@@ -22,5 +19,5 @@ class UserResponse(BaseModel):
         from_attributes = True
 
 class Login_User(BaseModel):
-    email: str
-    password: str
+    email:str
+    password:str

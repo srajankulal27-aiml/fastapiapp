@@ -1,5 +1,6 @@
 
 from jose import jwt
+from jose.exceptions import JWTError
 from datetime import datetime, timedelta
 from database import get_db
 from dotenv import load_dotenv
@@ -9,7 +10,8 @@ from sqlalchemy.orm import Session
 from models.users import User
 
 load_dotenv()
-SECRET_KEY = os.getenv("SECRET_KEY")
+# Use environment variable or fall back to a default for development
+SECRET_KEY = os.getenv("SECRET_KEY") or "your-secret-key-change-this-in-production-12345678"
 ALGORITHM = "HS256"
 
 def create_access_token(data: dict, expires_delta: timedelta =timedelta(hours=2)):
@@ -20,7 +22,13 @@ def create_access_token(data: dict, expires_delta: timedelta =timedelta(hours=2)
     return encoded_jwt
 
 def verify_access_token(token: str, db: Session = Depends(get_db)):
-    to_decode = jwt.decode(token, key=SECRET_KEY, algorithms=[ALGORITHM])
+    try:
+        to_decode = jwt.decode(token, key=SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid authentication credentials"
+        )
 
     user_id = None
     if isinstance(to_decode, dict):

@@ -4,7 +4,7 @@ from schemas.company import CompanyCreate,CompanyUpdate,CompanyResponse
 from models.company import Company
 from sqlalchemy.orm import Session
 from database import get_db,SessionLocal
-from utils.oauth2 import role_required,get_current_user
+from utils.oauth2 import get_current_user
 
 router = APIRouter(prefix="/company", tags=["company"])
 
@@ -29,7 +29,7 @@ def get_company(company_id: int,db:Session = Depends(get_db),current_user = Depe
     return company
 
 @router.put("/{company_id}",status_code=status.HTTP_201_CREATED)
-def update_company(company_id: int,company: CompanyUpdate,db:Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
+def update_company(company_id: int,company: CompanyUpdate,db:Session = Depends(get_db),current_user = Depends(get_current_user)):
     db_company = db.query(Company).filter(Company.id == company_id).first()
     if not db_company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")
@@ -40,7 +40,7 @@ def update_company(company_id: int,company: CompanyUpdate,db:Session = Depends(g
     return db_company
 
 @router.delete("/{company_id}",status_code=status.HTTP_204_NO_CONTENT)
-def delete_company(company_id: int,db:Session = Depends(get_db),current_user = Depends(role_required(["admin"]))):
+def delete_company(company_id: int,db:Session = Depends(get_db),current_user = Depends(get_current_user)):
     db_company = db.query(Company).filter(Company.id == company_id).first()
     if not db_company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")

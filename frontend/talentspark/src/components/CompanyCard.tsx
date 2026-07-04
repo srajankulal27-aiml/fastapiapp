@@ -31,7 +31,8 @@ function CompanyCard({
         jobs:[]
     });
     const handleAdd = () => {
-        onadd(addform);
+        const { id, ...companyData } = addform;
+        onadd(companyData as Company);
         setAddform({
             id:0,
             name:"",
@@ -56,7 +57,8 @@ function CompanyCard({
         ondelete(id);
     }
     const handleSave = (id:number) => {
-        onedit(editform);
+        const { id: _, ...companyData } = editform;
+        onedit({ id, ...companyData } as Company);
         setEditform({
             id:0,
             name:"",

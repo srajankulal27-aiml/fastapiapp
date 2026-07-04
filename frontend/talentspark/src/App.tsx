@@ -3,14 +3,19 @@ import NavBar from "./components/NavBar";
 import CompanyCard from "./components/CompanyCard";
 import JobCard from "./components/JobCard";
 import Footer from "./components/Footer";
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
 import {useEffect,useState} from "react";
 import { getCompanies,updateCompany,deleteCompany,createCompany } from "./Services/CompanyService";
+import { isAuthenticated, logout } from "./Services/AuthService";
 import type {Company} from "./types/company"
 
 function App(){
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState<Error | null>(null)
   const [companies,setCompanies] = useState<Company[]>([]);
+  const [authenticated, setAuthenticated] = useState(isAuthenticated());
+  const [currentPage, setCurrentPage] = useState<"login" | "register" | "dashboard">("login");
 
   async function fetchCompanies() {
     setLoading(true);
@@ -51,11 +56,43 @@ function App(){
     }
   }
 
+  function handleLogin(token: string) {
+    setAuthenticated(true);
+    setCurrentPage("dashboard");
+    fetchCompanies();
+  }
+
+  function handleLogout() {
+    logout();
+    setAuthenticated(false);
+    setCurrentPage("login");
+    setCompanies([]);
+  }
 
   useEffect(() => {
-    fetchCompanies();
+    if (isAuthenticated()) {
+      setAuthenticated(true);
+      setCurrentPage("dashboard");
+      fetchCompanies();
+    } else {
+      setLoading(false);
+    }
   }, []);
   
+  if (!authenticated) {
+    if (currentPage === "login") {
+      return <Login 
+        onLogin={handleLogin}
+        onSwitchToRegister={() => setCurrentPage("register")}
+      />;
+    } else {
+      return <Register 
+        onRegister={() => setCurrentPage("login")}
+        onSwitchToLogin={() => setCurrentPage("login")}
+      />;
+    }
+  }
+
   if(loading){
     return <div>Loading...</div>
   }
@@ -66,7 +103,7 @@ function App(){
   
   return(
     <>
-    <NavBar />
+    <NavBar onLogout={handleLogout} />
     {/* <Welcome /> */}
     <br />
     <CompanyCard 

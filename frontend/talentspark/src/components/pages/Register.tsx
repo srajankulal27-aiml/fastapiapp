@@ -2,10 +2,11 @@ import {useState} from "react";
 import {register} from "../../Services/AuthService";
 
 type Props = {
+    onRegister?: () => void;
     onSwitchToLogin: () => void;
 }
 
-function Register({onSwitchToLogin}: Props){
+function Register({onRegister, onSwitchToLogin}: Props){
     const [name,setName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -16,6 +17,7 @@ function Register({onSwitchToLogin}: Props){
         try {
             await register({name,email,password,role});
             alert("Registration successful! Please login.");
+            onRegister?.();
             onSwitchToLogin();
         } catch (error) {
             console.error("Error during registration:", error);

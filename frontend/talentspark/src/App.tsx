@@ -9,6 +9,7 @@ import {useEffect,useState} from "react";
 import { getCompanies,updateCompany,deleteCompany,createCompany } from "./Services/CompanyService";
 import { isAuthenticated, logout } from "./Services/AuthService";
 import type {Company} from "./types/company"
+import Chat from "./components/pages/chat";
 
 function App(){
   const [loading,setLoading] = useState(true);
@@ -113,6 +114,7 @@ function App(){
     onadd={handleAdd}
     />
     <JobCard />
+    <Chat />
     <Footer />
     </>
   )

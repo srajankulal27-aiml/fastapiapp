@@ -1,44 +1,85 @@
-import {useState} from "react";
-import {register} from "../../Services/AuthService";
+import { useState } from "react";
+import { register } from "../../Services/AuthService";
+
+import type { RegisterRequest } from "../../types/user";
 
 type Props = {
-    onRegister?: () => void;
-    onSwitchToLogin: () => void;
+  onRegister: () => void;
+  onSwitchToLogin: () => void;
+};
+
+export default function Register({ onRegister, onSwitchToLogin }: Props) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const payload: RegisterRequest = {
+      name,
+      email,
+      password,
+      role,
+    };
+
+    try {
+      await register(payload);
+      onRegister();
+    } catch (err) {
+      console.error("Registration failed", err);
+      alert("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="register-form">
+      <h2>Create an Account</h2>
+
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Full Name"
+        required
+      />
+
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
+
+      <input
+        type="text"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        placeholder="Role"
+        required
+      />
+
+      <button type="submit" disabled={loading}>
+        {loading ? "Registering..." : "Register"}
+      </button>
+
+      <p>
+        Already have an account? <button type="button" onClick={onSwitchToLogin}>Login</button>
+      </p>
+    </form>
+  );
 }
-
-function Register({onRegister, onSwitchToLogin}: Props){
-    const [name,setName] = useState("");
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
-    const [role,setRole] = useState("");
-
-    const handleSubmit = async (e:React.FormEvent) => {
-        e.preventDefault();
-        try {
-            await register({name,email,password,role});
-            alert("Registration successful! Please login.");
-            onRegister?.();
-            onSwitchToLogin();
-        } catch (error) {
-            console.error("Error during registration:", error);
-            alert("Registration failed");
-        }
-    }   
-    return(
-        <form onSubmit={handleSubmit}>
-            <h2>Register</h2>
-            <input type="text" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Name" required/>
-            <br />
-            <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" required/>
-            <br />
-            <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" required/>
-            <br />
-            <input type="text" value={role} onChange={(e)=>setRole(e.target.value)} placeholder="Role" required/>
-            <br />
-            <button type="submit">Register</button>
-            <p>Already have an account? <button type="button" onClick={onSwitchToLogin}>Login</button></p>
-        </form>
-    )
-}
-
-export default Register;

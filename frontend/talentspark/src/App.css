@@ -1,8 +1,7 @@
 body{
     margin:0;
     padding:0;
-    background:#1e1e2f;
-    color:white;
+    background:#eef2f7;
     font-family:Arial, Helvetica, sans-serif;
 }
 
@@ -11,75 +10,186 @@ body{
     min-height:100vh;
 }
 
-h1{
-    margin:0;
-    font-size:28px;
-}
-
-h2{
-    margin-top:40px;
-    text-align:center;
+.company-container{
+    width:90%;
+    max-width:900px;
+    margin:40px auto;
 }
 
 .company-card{
-    width:500px;
-    margin:25px auto;
-    padding:20px;
 
-    border:1px solid #555;
-    border-radius:10px;
+    background:#1f2a44;
 
-    background:#25253b;
+    color:white;
+
+    padding:25px;
+
+    border-radius:16px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+    transition:.3s;
+}
+
+.company-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.35);
+
 }
 
 .company-card h1{
-    margin-bottom:15px;
+
+    color:#29b6ff;
+
+    margin-bottom:20px;
+
+    text-transform:capitalize;
+
 }
 
 .company-card p{
-    margin:8px 0;
-    font-size:16px;
+
+    margin:10px 0;
+
+    font-size:17px;
+
 }
 
 input{
-    width:220px;
-    padding:10px 12px;
-    margin:8px;
 
-    border:1px solid #555;
-    border-radius:6px;
+    width:100%;
 
-    background:#2f2f2f;
+    padding:12px;
+
+    margin:10px 0;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#2d3b59;
+
     color:white;
 
-    outline:none;
-
     font-size:15px;
+
+    box-sizing:border-box;
+
 }
 
 input::placeholder{
-    color:#bfc5d2;
-    opacity:1;
+
+    color:#cbd5e1;
+
+}
+
+.button-group{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:25px;
+
 }
 
 button{
-    padding:9px 18px;
-    margin:8px;
+
+    flex:1;
+
+    padding:12px;
 
     border:none;
-    border-radius:6px;
+
+    border-radius:8px;
+
+    color:white;
+
+    font-size:16px;
 
     cursor:pointer;
 
-    font-size:15px;
+    transition:.3s;
+
 }
 
 button:hover{
-    opacity:.9;
+
+    transform:scale(1.02);
+
 }
 
-hr{
-    border:0;
-    border-top:1px solid #444;
-    margin:20px 0;
+.edit-btn,
+.save-btn{
+
+    background:#2563eb;
+
+}
+
+.edit-btn:hover,
+.save-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+.delete-btn{
+
+    background:#ef4444;
+
+}
+
+.delete-btn:hover{
+
+    background:#dc2626;
+
+}
+
+.cancel-btn{
+
+    background:#6b7280;
+
+}
+
+.cancel-btn:hover{
+
+    background:#4b5563;
+
+}
+
+.add-btn{
+
+    width:100%;
+
+    margin-top:15px;
+
+    background:#10b981;
+
+}
+
+.add-btn:hover{
+
+    background:#059669;
+
+}
+
+h2{
+
+    text-align:center;
+
+    color:white;
+
+    margin-bottom:20px;
+
+}
+.page-title{
+    text-align:center;
+    margin:40px 0 20px;
+    color:#1f2a44;
+    font-size:40px;
+    font-weight:bold;
 }

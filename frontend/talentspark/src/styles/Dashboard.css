@@ -1,0 +1,105 @@
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+
+    margin-left:260px;
+
+    margin-top:70px;
+
+    padding:35px;
+
+    background:#f5f7fb;
+
+    min-height:100vh;
+
+}
+
+.dashboard-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+.dashboard-header h1{
+
+    font-size:34px;
+
+    color:#1e293b;
+
+}
+
+.dashboard-header p{
+
+    color:#64748b;
+
+    margin-top:5px;
+
+}
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin-bottom:40px;
+
+}
+
+.stat-card{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.12);
+
+}
+
+.stat-card h2{
+
+    color:#2563eb;
+
+    font-size:36px;
+
+    margin-bottom:8px;
+
+}
+
+.stat-card span{
+
+    color:#64748b;
+
+    font-size:15px;
+
+}
+
+.dashboard-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+
+}

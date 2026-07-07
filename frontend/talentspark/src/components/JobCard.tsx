@@ -1,3 +1,4 @@
+import "../styles/JobCard.css";
 function JobCard() {
     return (
         <div>

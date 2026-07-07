@@ -78,22 +78,23 @@ def search_jobs(query: str, top_k: int = 5) -> list[dict]:
         for hit in results.points
     ]
 
-def match_jobs_for_profit(skills:str,experience:str,top_k:int=5)->list[dict]:
+def match_jobs_for_profile(skills: str, experience: str, top_k: int = 5) -> list[dict]:
     ensure_collection()
-    profile_text=f"Skills: {skills} and Experience: {experience}"
-    profile_vector=embed_text(profile_text)
-    results=qdrant.query_points(
+    profile_text = f"Skills: {skills} and Experience: {experience}"
+    profile_vector = embed_text(profile_text)
+    results = qdrant.query_points(
         collection_name=COLLECTION_NAME,
         query=profile_vector,
-        limit=top_k
+        limit=top_k,
     )
+
     return [
         {
             "job_id": hit.payload.get("job_id"),
             "title": hit.payload.get("title"),
             "description": hit.payload.get("description"),
             "salary": hit.payload.get("salary"),
-            "match_score": round(hit.score*100, 2)
+            "match_score": round(hit.score * 100, 2),
         }
         for hit in results.points
     ]

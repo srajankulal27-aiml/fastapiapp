@@ -1,0 +1,95 @@
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+
+    width:260px;
+
+    height:100vh;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    background:#1e293b;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    color:white;
+
+    box-shadow:5px 0 20px rgba(0,0,0,.15);
+
+}
+
+.logo{
+
+    padding:30px;
+
+    text-align:center;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.logo h2{
+
+    color:#60a5fa;
+
+    font-size:28px;
+
+}
+
+.sidebar nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    padding:20px;
+
+}
+
+.sidebar nav a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:14px 18px;
+
+    margin-bottom:12px;
+
+    text-decoration:none;
+
+    color:#cbd5e1;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+.sidebar nav a:hover{
+
+    background:#2563eb;
+
+    color:white;
+
+    transform:translateX(6px);
+
+}
+
+.sidebar-bottom{
+
+    padding:20px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}

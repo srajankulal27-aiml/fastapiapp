@@ -8,7 +8,7 @@ from schemas.rag import (
     EmbedResponse,
     JobSearchRequest, SemanticSearchResponse, SemanticSearchResult
 )
-from services.resume_service import analyse_resume
+from services.resume_service import analyze_resume
 from services.qdrant_service import embed_all_jobs, search_jobs, match_jobs_for_profile
 from services.rag_service import rag_job_search
 
@@ -37,7 +37,7 @@ def rag_ask(request: RagSearchRequest):
 
 @router.post("/analyse-resume", response_model=ResumeResponse)
 def resume_analyse(request: ResumeRequest):
-    analysis = analyse_resume(request.resume_text)
+    analysis = analyze_resume(request.resume_text)
     return ResumeResponse(analysis=analysis)
 
 
@@ -82,5 +82,5 @@ def job_match(request: JobMatchRequest):
 # | **POST `/rag/embed-jobs`**     | Reads all jobs from PostgreSQL, generates embeddings, and stores them in Qdrant.                                         | `embed_all_jobs()`         |
 # | **POST `/rag/search`**         | Performs semantic search using a natural-language query and returns the top matching jobs.                               | `search_jobs()`            |
 # | **POST `/rag/ask`**            | Executes the full RAG pipeline: retrieve relevant jobs from Qdrant and generate a natural-language answer using the LLM. | `rag_job_search()`         |
-# | **POST `/rag/analyse-resume`** | Sends resume text to the LLM and returns a structured resume analysis.                                                   | `analyse_resume()`         |
+# | **POST `/rag/analyse-resume`** | Sends resume text to the LLM and returns a structured resume analysis.                                                   | `analyze_resume()`         |
 # | **POST `/rag/job-match`**      | Matches a candidate's skills and experience against stored job embeddings and returns the best matching jobs.            | `match_jobs_for_profile()` |

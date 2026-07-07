@@ -38,48 +38,73 @@ export default function Register({ onRegister, onSwitchToLogin }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="register-form">
-      <h2>Create an Account</h2>
+    <div className="auth-container">
+      <div className="auth-card card">
+        <h2>Create an Account</h2>
+        <p>Get started with TalentSpark AI recruitment</p>
 
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Full Name"
-        required
-      />
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. John Doe"
+              required
+            />
+          </div>
 
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
+          <div className="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="e.g. john@company.com"
+              required
+            />
+          </div>
 
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+            />
+          </div>
 
-      <input
-        type="text"
-        value={role}
-        onChange={(e) => setRole(e.target.value)}
-        placeholder="Role"
-        required
-      />
+          <div className="form-group">
+            <label>Role</label>
+            <input
+              type="text"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              placeholder="e.g. Recruiter, Manager"
+              required
+            />
+          </div>
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Registering..." : "Register"}
-      </button>
+          <button
+            type="submit"
+            className="add-btn"
+            style={{ width: "100%", marginTop: "10px" }}
+            disabled={loading}
+          >
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
 
-      <p>
-        Already have an account? <button type="button" onClick={onSwitchToLogin}>Login</button>
-      </p>
-    </form>
+        <div className="switch-text">
+          Already have an account?
+          <button type="button" onClick={onSwitchToLogin}>
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

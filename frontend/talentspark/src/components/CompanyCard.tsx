@@ -85,7 +85,8 @@ function CompanyCard({
       {companies.map((company) => (
         <div className="company-card" key={company.id}>
           {editCompanyId === company.id ? (
-            <>
+            <div className="add-company">
+              <h2>Edit Company</h2>
               <input
                 type="text"
                 placeholder="Company Name"
@@ -122,7 +123,7 @@ function CompanyCard({
                 }
               />
 
-              <div className="button-group">
+              <div className="card-buttons">
                 <button
                   className="save-btn"
                   onClick={() => handleSave(company.id)}
@@ -134,24 +135,34 @@ function CompanyCard({
                   Cancel
                 </button>
               </div>
-            </>
+            </div>
           ) : (
             <>
-              <h1>{company.name}</h1>
+              <div className="company-header">
+                <div className="company-info">
+                  <div className="company-logo">
+                    {company.name ? company.name[0].toUpperCase() : "C"}
+                  </div>
+                  <h1 className="company-name">{company.name}</h1>
+                </div>
+                <span className="status">Active</span>
+              </div>
 
-              <p>
-                <strong>Email:</strong> {company.email}
-              </p>
+              <div className="company-details">
+                <p>
+                  <strong>Email:</strong> {company.email}
+                </p>
 
-              <p>
-                <strong>Phone:</strong> {company.phone}
-              </p>
+                <p>
+                  <strong>Phone:</strong> {company.phone}
+                </p>
 
-              <p>
-                <strong>Location:</strong> {company.location}
-              </p>
+                <p>
+                  <strong>Location:</strong> {company.location}
+                </p>
+              </div>
 
-              <div className="button-group">
+              <div className="card-buttons">
                 <button
                   className="edit-btn"
                   onClick={() => {
@@ -182,7 +193,7 @@ function CompanyCard({
         </div>
       ))}
 
-      <div className="company-card">
+      <div className="company-card add-company">
         <h2>Add Company</h2>
 
         <input

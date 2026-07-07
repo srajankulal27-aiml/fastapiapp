@@ -1,9 +1,9 @@
 import api from "./api";
 import type{Job} from "../types/job";
 
-export async function getJobs(): Promise<Job>{
+export async function getJobs(): Promise<Job[]> {
     const response = await api.get(`/job`);
-    return response.data
+    return response.data;
 }
 
 export async function getJobId(id:number): Promise<Job> {

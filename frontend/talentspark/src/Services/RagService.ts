@@ -1,45 +1,35 @@
-import axios from "axios";
-
-const API = "http://127.0.0.1:8000/rag";
+import api from "./api";
 
 export const analyseResume = async (resume: string) => {
-  const res = await axios.post(`${API}/analyse-resume`, {
+  const res = await api.post(`/rag/analyse-resume`, {
     resume_text: resume,
   });
-
   return res.data;
 };
 
 export const semanticSearch = async (query: string) => {
-  const res = await axios.post(`${API}/search`, {
+  const res = await api.post(`/rag/search`, {
     query,
   });
-
   return res.data;
 };
 
 export const askAI = async (question: string) => {
-  const res = await axios.post(`${API}/ask`, {
+  const res = await api.post(`/rag/ask`, {
     question,
   });
-
   return res.data;
 };
 
-export const jobMatch = async (
-  skills: string,
-  experience: string
-) => {
-  const res = await axios.post(`${API}/job-match`, {
+export const jobMatch = async (skills: string, experience: string) => {
+  const res = await api.post(`/rag/job-match`, {
     skills,
     experience,
   });
-
   return res.data;
 };
 
 export const embedJobs = async () => {
-  const res = await axios.post(`${API}/embed-jobs`);
-
+  const res = await api.post(`/rag/embed-jobs`);
   return res.data;
 };

@@ -41,6 +41,8 @@ function App() {
     "login" | "register" | "dashboard"
   >("login");
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   async function fetchCompanies() {
     setLoading(true);
 
@@ -137,11 +139,11 @@ function App() {
 
   return (
     <>
-      <NavBar onLogout={handleLogout} />
+      <NavBar onLogout={handleLogout} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <Dashboard>
+      <Dashboard sidebarOpen={sidebarOpen}>
         <Routes>
           <Route
             path="/"

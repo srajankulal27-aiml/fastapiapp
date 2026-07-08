@@ -1,8 +1,17 @@
 import os
+# pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
+# pyrefly: ignore [missing-import]
 from qdrant_client import QdrantClient
+# pyrefly: ignore [missing-import]
 from qdrant_client.models import Distance, VectorParams, PointStruct
+# pyrefly: ignore [missing-import]
 from fastembed import TextEmbedding
+# pyrefly: ignore [missing-import]
+from sqlalchemy.ext.asyncio import AsyncSession
+# pyrefly: ignore [missing-import]
+from sqlalchemy.future import select
+# pyrefly: ignore [missing-import]
 from sqlalchemy.orm import Session
 from models.job import Job
 
@@ -40,12 +49,11 @@ def ensure_collection():
 def embed_text(text: str) -> list[float]:
     return next(embeddings_model.embed([text])).tolist()
 
-
-def embed_all_jobs(db: Session) -> int:
+async def embed_all_jobs(db: AsyncSession) -> int:
     ensure_collection()
 
-    jobs = db.query(Job).all()
-
+    result = await db.execute(select(Job))
+    jobs=result.scalars().all()
     if not jobs:
         return 0
     

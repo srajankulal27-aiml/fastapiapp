@@ -14,7 +14,15 @@ if DATABASE_URL.startswith("postgres://"):
 
 if "supabase.com" in DATABASE_URL:
     DATABASE_URL=DATABASE_URL.split("?")[0]
-    engine = create_async_engine(DATABASE_URL,echo=False,connect_args={"ssl":"require"})
+    engine = create_async_engine(
+        DATABASE_URL,
+        echo=False,
+        connect_args={
+            "ssl": "require",
+            "statement_cache_size": 0,
+            "prepared_statement_cache_size": 0,
+        }
+    )
 else:
     engine = create_async_engine(DATABASE_URL,echo=False)
 SessionLocal=async_sessionmaker(autocommit=False,autoflush=False,bind=engine,class_=AsyncSession)

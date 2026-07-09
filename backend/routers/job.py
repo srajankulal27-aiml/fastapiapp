@@ -11,24 +11,29 @@ from schemas.job import JobCreate, JobUpdate, JobResponse
 from models.job import Job
 from database import get_db
 from utils.oauth2 import role_required, get_current_user
+from services.qdrant_service import upsert_job_embedding, delete_job_embedding
 
 router = APIRouter(prefix="/job", tags=["job"])
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=JobResponse)
-async def create_job(job: JobCreate, db: AsyncSession = Depends(get_db), current_user=Depends(role_required(["admin","hr"]))):
+@router.post("", status_code=status.HTTP_201_CREATED, response_model=JobResponse)
+async def create_job(job: JobCreate, db: AsyncSession = Depends(get_db), current_user=Depends(role_required(["admin","hr","recruiter","manager","ai engineer"]))):
     try:
         db_job = Job(**job.dict())
         db.add(db_job)
         await db.commit()
         await db.refresh(db_job)
+        try:
+            upsert_job_embedding(db_job.id, db_job.title, db_job.description, db_job.salary)
+        except Exception as q_err:
+            print(f"Failed to sync newly created job to Qdrant: {q_err}")
         return db_job
     except Exception as e:
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
 
-@router.get("/", status_code=status.HTTP_200_OK, response_model=list[JobResponse])
+@router.get("", status_code=status.HTTP_200_OK, response_model=list[JobResponse])
 async def get_all_job(db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
     try:
         jobs = await db.execute(select(Job))
@@ -57,7 +62,7 @@ async def get_job(job_id: int, db: AsyncSession = Depends(get_db), current_user=
 
 
 @router.put("/{job_id}", status_code=status.HTTP_200_OK, response_model=JobResponse)
-async def update_job(job_id: int, job: JobUpdate, db: AsyncSession = Depends(get_db), current_user=Depends(role_required(["admin","hr"]))):
+async def update_job(job_id: int, job: JobUpdate, db: AsyncSession = Depends(get_db), current_user=Depends(role_required(["admin","hr","recruiter","manager","ai engineer"]))):
     try:
         result = await db.execute(select(Job).filter(Job.id == job_id))
         db_job = result.scalars().first()
@@ -72,7 +77,10 @@ async def update_job(job_id: int, job: JobUpdate, db: AsyncSession = Depends(get
             setattr(db_job, key, value)
         await db.commit()
         await db.refresh(db_job)
-
+        try:
+            upsert_job_embedding(db_job.id, db_job.title, db_job.description, db_job.salary)
+        except Exception as q_err:
+            print(f"Failed to sync updated job to Qdrant: {q_err}")
         return db_job
     except Exception as e:
         await db.rollback()
@@ -80,7 +88,7 @@ async def update_job(job_id: int, job: JobUpdate, db: AsyncSession = Depends(get
 
 
 @router.delete("/{job_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_job(job_id: int, db: AsyncSession = Depends(get_db), current_user=Depends(role_required(["admin","hr"]))):
+async def delete_job(job_id: int, db: AsyncSession = Depends(get_db), current_user=Depends(role_required(["admin","hr","recruiter","manager","ai engineer"]))):
     try:
         result = await db.execute(select(Job).filter(Job.id == job_id))
         db_job = result.scalars().first()
@@ -93,7 +101,10 @@ async def delete_job(job_id: int, db: AsyncSession = Depends(get_db), current_us
 
         await db.delete(db_job)
         await db.commit()
-
+        try:
+            delete_job_embedding(job_id)
+        except Exception as q_err:
+            print(f"Failed to delete job embedding from Qdrant: {q_err}")
         return {"detail": "Job deleted successfully."}
     except Exception as e:
         await db.rollback()

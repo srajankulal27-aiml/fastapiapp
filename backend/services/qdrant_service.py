@@ -19,10 +19,26 @@ load_dotenv()
 
 COLLECTION_NAME = "job_descriptions"
 VECTOR_SIZE = 384
-qdrant = QdrantClient(
-    url=os.getenv("QDRANT_URL"),
-    api_key=os.getenv("QDRANT_API_KEY"),
-)
+
+qdrant_url = os.getenv("QDRANT_URL")
+qdrant_api_key = os.getenv("QDRANT_API_KEY")
+
+qdrant = None
+if qdrant_url and "qdrant.io" in qdrant_url:
+    try:
+        qdrant = QdrantClient(
+            url=qdrant_url,
+            api_key=qdrant_api_key,
+            timeout=5,
+        )
+        qdrant.get_collections()
+        print("Connected to remote Qdrant Cloud successfully.")
+    except Exception as e:
+        print(f"Failed to connect to remote Qdrant Cloud ({e}). Falling back to local file storage.")
+        qdrant = None
+
+if qdrant is None:
+    qdrant = QdrantClient(path="local_qdrant_db")
 embeddings_model = TextEmbedding("BAAI/bge-small-en-v1.5")
 
 
@@ -106,4 +122,31 @@ def match_jobs_for_profile(skills: str, experience: str, top_k: int = 5) -> list
         }
         for hit in results.points
     ]
+
+def upsert_job_embedding(job_id: int, title: str, description: str, salary: int):
+    ensure_collection()
+    text = f"{title} {description or ''}"
+    vector = embed_text(text)
+    point = PointStruct(
+        id=job_id,
+        vector=vector,
+        payload={
+            "title": title,
+            "description": description or "",
+            "salary": salary,
+            "job_id": job_id
+        }
+    )
+    qdrant.upsert(collection_name=COLLECTION_NAME, points=[point])
+
+def delete_job_embedding(job_id: int):
+    ensure_collection()
+    try:
+        qdrant.delete(
+            collection_name=COLLECTION_NAME,
+            points_selector=[job_id]
+        )
+    except Exception as e:
+        print(f"Failed to delete job embedding from Qdrant: {e}")
+
     

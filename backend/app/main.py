@@ -20,8 +20,6 @@ async def startup_event():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-
-Base.metadata.create_all(bind=engine)
 app.include_router(auth.router)
 app.include_router(company.router)
 app.include_router(job.router)

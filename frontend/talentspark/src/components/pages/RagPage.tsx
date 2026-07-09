@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { embedJobs, jobMatch, askAI } from "../../Services/RagService";
 import { FaDatabase, FaQuestionCircle, FaMagic, FaCheckCircle, FaLaptopCode } from "react-icons/fa";
+import MarkdownRenderer from "../MarkdownRenderer";
 
 interface MatchResult {
   job_id?: number;
@@ -172,7 +173,7 @@ export default function RagPage() {
                       <div className="job-card-header">
                         <h3>{item.title}</h3>
                         <div className="score-badge">
-                          <span>{(item.match_score * 100).toFixed(1)}% Score</span>
+                          <span>{item.match_score ? item.match_score.toFixed(1) : "0.0"}% Score</span>
                         </div>
                       </div>
                       <p className="job-description">{item.description}</p>
@@ -214,7 +215,9 @@ export default function RagPage() {
             {askAnswer && (
               <div className="answer-card card">
                 <h4>AI Answer:</h4>
-                <p className="answer-text">{askAnswer}</p>
+                <div className="answer-text">
+                  <MarkdownRenderer content={askAnswer} />
+                </div>
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { analyseResume } from "../../Services/RagService";
 import { FaFileInvoice, FaMagic, FaCheckCircle } from "react-icons/fa";
+import MarkdownRenderer from "../MarkdownRenderer";
 
 export default function ResumePage() {
   const [resumeText, setResumeText] = useState("");
@@ -68,7 +69,7 @@ export default function ResumePage() {
           {!loading && analysis && (
             <div className="analysis-report-container">
               <div className="analysis-output">
-                {analysis}
+                <MarkdownRenderer content={analysis} />
               </div>
             </div>
           )}

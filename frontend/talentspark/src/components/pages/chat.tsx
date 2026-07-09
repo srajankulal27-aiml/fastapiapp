@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import api from "../../Services/api";
 import { BsFillSendFill, BsRobot } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
+import MarkdownRenderer from "../MarkdownRenderer";
 import "./chat.css";
 
 interface Message {
@@ -106,7 +107,13 @@ export default function Chat() {
                 <div className="message-sender-name">
                   {msg.sender === "user" ? "Recruiter / Candidate" : "AI Assistant"}
                 </div>
-                <div className="message-bubble">{msg.text}</div>
+                <div className="message-bubble">
+                  {msg.sender === "bot" ? (
+                    <MarkdownRenderer content={msg.text} />
+                  ) : (
+                    msg.text
+                  )}
+                </div>
               </div>
             </div>
           ))}

@@ -20,29 +20,40 @@ load_dotenv()
 COLLECTION_NAME = "job_descriptions"
 VECTOR_SIZE = 384
 
-qdrant_url = os.getenv("QDRANT_URL")
-qdrant_api_key = os.getenv("QDRANT_API_KEY")
+_qdrant = None
+_embeddings_model = None
 
-qdrant = None
-if qdrant_url and "qdrant.io" in qdrant_url:
-    try:
-        qdrant = QdrantClient(
-            url=qdrant_url,
-            api_key=qdrant_api_key,
-            timeout=5,
-        )
-        qdrant.get_collections()
-        print("Connected to remote Qdrant Cloud successfully.")
-    except Exception as e:
-        print(f"Failed to connect to remote Qdrant Cloud ({e}). Falling back to local file storage.")
-        qdrant = None
+def get_qdrant_client() -> QdrantClient:
+    global _qdrant
+    if _qdrant is None:
+        qdrant_url = os.getenv("QDRANT_URL")
+        qdrant_api_key = os.getenv("QDRANT_API_KEY")
+        if qdrant_url and "qdrant.io" in qdrant_url:
+            try:
+                client = QdrantClient(
+                    url=qdrant_url,
+                    api_key=qdrant_api_key,
+                    timeout=5,
+                )
+                client.get_collections()
+                print("Connected to remote Qdrant Cloud successfully.")
+                _qdrant = client
+            except Exception as e:
+                print(f"Failed to connect to remote Qdrant Cloud ({e}). Falling back to local file storage.")
+                _qdrant = None
+        if _qdrant is None:
+            _qdrant = QdrantClient(path="local_qdrant_db")
+    return _qdrant
 
-if qdrant is None:
-    qdrant = QdrantClient(path="local_qdrant_db")
-embeddings_model = TextEmbedding("BAAI/bge-small-en-v1.5")
+def get_embeddings_model() -> TextEmbedding:
+    global _embeddings_model
+    if _embeddings_model is None:
+        _embeddings_model = TextEmbedding("BAAI/bge-small-en-v1.5")
+    return _embeddings_model
 
 
 def ensure_collection():
+    qdrant = get_qdrant_client()
     collections = [
         c.name for c in qdrant.get_collections().collections
     ]
@@ -62,11 +73,14 @@ def ensure_collection():
                 size=VECTOR_SIZE,
                 distance=Distance.COSINE)
         )
+
 def embed_text(text: str) -> list[float]:
-    return next(embeddings_model.embed([text])).tolist()
+    model = get_embeddings_model()
+    return next(model.embed([text])).tolist()
 
 async def embed_all_jobs(db: AsyncSession) -> int:
     ensure_collection()
+    qdrant = get_qdrant_client()
 
     result = await db.execute(select(Job))
     jobs=result.scalars().all()
@@ -83,6 +97,7 @@ async def embed_all_jobs(db: AsyncSession) -> int:
 
 def search_jobs(query: str, top_k: int = 5) -> list[dict]:
     ensure_collection()
+    qdrant = get_qdrant_client()
 
     query_vector = embed_text(query)
     results=qdrant.query_points(
@@ -104,6 +119,7 @@ def search_jobs(query: str, top_k: int = 5) -> list[dict]:
 
 def match_jobs_for_profile(skills: str, experience: str, top_k: int = 5) -> list[dict]:
     ensure_collection()
+    qdrant = get_qdrant_client()
     profile_text = f"Skills: {skills} and Experience: {experience}"
     profile_vector = embed_text(profile_text)
     results = qdrant.query_points(
@@ -125,6 +141,7 @@ def match_jobs_for_profile(skills: str, experience: str, top_k: int = 5) -> list
 
 def upsert_job_embedding(job_id: int, title: str, description: str, salary: int):
     ensure_collection()
+    qdrant = get_qdrant_client()
     text = f"{title} {description or ''}"
     vector = embed_text(text)
     point = PointStruct(
@@ -141,6 +158,7 @@ def upsert_job_embedding(job_id: int, title: str, description: str, salary: int)
 
 def delete_job_embedding(job_id: int):
     ensure_collection()
+    qdrant = get_qdrant_client()
     try:
         qdrant.delete(
             collection_name=COLLECTION_NAME,

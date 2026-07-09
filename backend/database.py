@@ -4,9 +4,13 @@ from sqlalchemy.ext.asyncio import create_async_engine,async_sessionmaker,AsyncS
 # pyrefly: ignore [missing-import]
 from sqlalchemy.orm import declarative_base
 # pyrefly: ignore [missing-import]
+from pathlib import Path
+# pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
+python-dotenv==1.1.1
 
-load_dotenv()
+
+load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env")
 
 DATABASE_URL=os.getenv("DATABASE_URL","postgresql://postgres:admin123@localhost:5432/student_db")
 if DATABASE_URL.startswith("postgres://"):

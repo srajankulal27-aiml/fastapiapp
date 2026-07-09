@@ -1,0 +1,282 @@
+/* ================================
+   TalentSpark AI - RAG Dashboard
+================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:#f8fafc;
+}
+
+/* Main Container */
+
+.rag-container{
+    max-width:1400px;
+    margin:auto;
+    padding:40px;
+}
+
+/* Header */
+
+.rag-header{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.rag-header h1{
+    font-size:3rem;
+    font-weight:700;
+    background:linear-gradient(90deg,#3b82f6,#9333ea,#06b6d4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.rag-header p{
+    margin-top:12px;
+    color:#94a3b8;
+    font-size:17px;
+}
+
+/* Grid */
+
+.rag-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+/* Card */
+
+.rag-card{
+    background:#1e293b;
+    border:1px solid #334155;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+    transition:.35s;
+}
+
+.rag-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(59,130,246,.25);
+}
+
+.rag-card h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+    color:#fff;
+    font-size:22px;
+}
+
+/* Inputs */
+
+.rag-input,
+.rag-textarea{
+
+    width:100%;
+    background:#0f172a;
+    border:1px solid #334155;
+    color:white;
+    border-radius:12px;
+    padding:14px 16px;
+    outline:none;
+    font-size:15px;
+    transition:.3s;
+}
+
+.rag-textarea{
+    resize:vertical;
+    min-height:220px;
+}
+
+.rag-input:focus,
+.rag-textarea:focus{
+
+    border-color:#3b82f6;
+    box-shadow:0 0 12px rgba(59,130,246,.35);
+
+}
+
+/* Button */
+
+.rag-btn{
+
+    margin-top:18px;
+    width:100%;
+    border:none;
+    cursor:pointer;
+    padding:14px;
+    border-radius:12px;
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+    transition:.3s;
+
+}
+
+.rag-btn:hover{
+
+    transform:translateY(-2px);
+    box-shadow:0 12px 25px rgba(37,99,235,.4);
+
+}
+
+.rag-btn:disabled{
+
+    opacity:.6;
+    cursor:not-allowed;
+
+}
+
+/* Output */
+
+.output-card{
+
+    margin-top:20px;
+    background:#111827;
+    border:1px solid #374151;
+    border-radius:14px;
+    padding:18px;
+    min-height:170px;
+    white-space:pre-wrap;
+    overflow:auto;
+    color:#e5e7eb;
+    line-height:1.6;
+
+}
+
+.output-card::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.output-card::-webkit-scrollbar-thumb{
+
+    background:#475569;
+    border-radius:20px;
+
+}
+
+/* Full Width Card */
+
+.full-width{
+
+    grid-column:1 / span 2;
+
+}
+
+/* Loading */
+
+.loading{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    color:#60a5fa;
+    font-weight:600;
+
+}
+
+.spinner{
+
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:3px solid rgba(255,255,255,.2);
+    border-top:3px solid #3b82f6;
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+/* Status */
+
+.success{
+
+    color:#22c55e;
+    font-weight:600;
+
+}
+
+.error{
+
+    color:#ef4444;
+    font-weight:600;
+
+}
+
+/* Responsive */
+
+@media(max-width:1000px){
+
+    .rag-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .full-width{
+
+        grid-column:auto;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .rag-container{
+
+        padding:20px;
+
+    }
+
+    .rag-header h1{
+
+        font-size:2.2rem;
+
+    }
+
+    .rag-card{
+
+        padding:18px;
+
+    }
+
+}
+
+@media(max-width:500px){
+
+    .rag-header h1{
+
+        font-size:1.8rem;
+
+    }
+
+    .rag-btn{
+
+        font-size:14px;
+
+    }
+
+}

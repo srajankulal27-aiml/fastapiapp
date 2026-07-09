@@ -1,0 +1,280 @@
+/* ================= COMPANY SECTION ================= */
+
+.company-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+    gap:25px;
+}
+
+/* ================= COMPANY CARD ================= */
+
+.company-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+    border:1px solid #edf2f7;
+}
+
+.company-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.company-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.company-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.company-logo{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+    font-weight:bold;
+}
+
+.company-name{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#1e293b;
+}
+
+.status{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+}
+
+.company-details p{
+    margin:12px 0;
+    color:#475569;
+    font-size:15px;
+}
+
+.company-details p{
+
+    margin:12px 0;
+
+    color:#475569;
+
+    font-size:15px;
+
+}
+
+.company-details strong{
+
+    color:#111827;
+}
+
+.card-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+.edit-btn{
+
+    flex:1;
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.edit-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+.delete-btn{
+
+    flex:1;
+
+    background:#ef4444;
+
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.delete-btn:hover{
+
+    background:#dc2626;
+
+}
+
+.save-btn{
+
+    flex:1;
+
+    background:#10b981;
+
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+}
+
+.cancel-btn{
+
+    flex:1;
+
+    background:#6b7280;
+
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+}
+
+.add-company{
+
+    margin-top:40px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.add-company h2{
+
+    margin-bottom:20px;
+
+    color:#1e293b;
+
+}
+
+.add-company input{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:18px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    outline:none;
+
+}
+
+.add-btn{
+
+    width:100%;
+
+    background:#10b981;
+
+    color:white;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.add-btn:hover{
+
+    background:#059669;
+
+}

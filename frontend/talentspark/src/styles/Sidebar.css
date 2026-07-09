@@ -1,0 +1,131 @@
+/* ================= SIDEBAR RESPONSIVE STYLES ================= */
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #0f172a; /* Slate 900 for premium feel */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  height: var(--navbar-height);
+}
+
+.logo h2 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.logo h2 span {
+  color: white;
+}
+
+.close-sidebar-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 6px;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.close-sidebar-btn:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  flex-grow: 1;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: #94a3b8; /* Slate 400 */
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.sidebar nav a svg {
+  font-size: 1.15rem;
+}
+
+.sidebar nav a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.sidebar nav a.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.sidebar-bottom {
+  padding: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-bottom a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.sidebar-bottom a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ================= MOBILE SIDEBAR COLLAPSE ================= */
+@media (max-width: 992px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .close-sidebar-btn {
+    display: flex;
+  }
+}

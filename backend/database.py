@@ -7,7 +7,6 @@ from sqlalchemy.orm import declarative_base
 from pathlib import Path
 # pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
-python-dotenv==1.1.1
 
 
 load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env")

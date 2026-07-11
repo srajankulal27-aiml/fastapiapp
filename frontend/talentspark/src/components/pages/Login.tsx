@@ -29,7 +29,7 @@ function Login({ onLogin, onSwitchToRegister }: Props) {
     <div className="auth-container">
       <div className="auth-card card">
         <h2>Welcome Back</h2>
-        <p>Log in to access your TalentSpark hiring panel</p>
+        <p>Log in to access your RecruitIQ hiring panel</p>
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">

@@ -15,7 +15,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "👋 Hello! I am your TalentSpark Career Assistant. Ask me anything about job search, resume formatting, career progression, or recruitment tips!",
+      text: "👋 Hello! I am your RecruitIQ Career Assistant. Ask me anything about job search, resume formatting, career progression, or recruitment tips!",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ export default function Chat() {
     try {
       const res = await api.post("/chat/ask_career", {
         message: currentMessage,
-        session_id: "user_session_spark",
+        session_id: "user_session_recruitiq",
       });
 
       setMessages((prev) => [
@@ -80,7 +80,7 @@ export default function Chat() {
           <div className="bot-info">
             <BsRobot className="bot-avatar-icon" />
             <div>
-              <h3>TalentSpark Career Coach</h3>
+              <h3>RecruitIQ Career Coach</h3>
               <span className="online-indicator">
                 <span className="status-dot green"></span> Active Now
               </span>

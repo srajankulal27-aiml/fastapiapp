@@ -34,7 +34,7 @@ export default function Sidebar({ isOpen, onClose }: Props) {
   return (
     <aside className={`sidebar ${isOpen ? "open" : ""}`}>
       <div className="logo">
-        <h2>Talent<span>Spark</span></h2>
+        <h2>Recruit<span>IQ</span></h2>
         <button className="close-sidebar-btn" onClick={onClose} aria-label="Close Sidebar">
           <FaTimes />
         </button>

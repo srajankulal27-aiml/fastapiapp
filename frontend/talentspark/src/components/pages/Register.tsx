@@ -41,7 +41,7 @@ export default function Register({ onRegister, onSwitchToLogin }: Props) {
     <div className="auth-container">
       <div className="auth-card card">
         <h2>Create an Account</h2>
-        <p>Get started with TalentSpark AI recruitment</p>
+        <p>Get started with RecruitIQ AI recruitment</p>
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">

@@ -36,7 +36,7 @@ export default function DashboardPage() {
     <div className="dashboard-page">
       <div className="page-header">
         <h1>Dashboard</h1>
-        <p>Welcome to TalentSpark AI Hiring Platform. Here is your recruitment overview.</p>
+        <p>Welcome to RecruitIQ AI Hiring Platform. Here is your recruitment overview.</p>
       </div>
 
       {loading ? (

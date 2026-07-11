@@ -49,7 +49,7 @@ export default function RagTools() {
 
   return (
     <div style={{ padding: "30px" }}>
-      <h1>TalentSpark AI - RAG Tools</h1>
+      <h1>RecruitIQ AI - RAG Tools</h1>
 
       <hr />
 

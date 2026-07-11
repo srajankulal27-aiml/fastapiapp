@@ -22,7 +22,7 @@ function NavBar({ onLogout, onToggleSidebar }: Props) {
         </button>
 
         <h2 className="logo">
-          Talent<span>Spark</span>
+          Spike<span>Error</span>
         </h2>
 
         <nav className="nav-links">
